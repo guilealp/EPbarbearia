@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('descricao', 200)->nullable(false);
             $table->integer('duracao')->nullable(false);
             $table->decimal('preco')->decimal()->nullable(false);
+            $table->bigInteger('nome_profissional')->nullable(false);
             $table->timestamps();
         });
     }

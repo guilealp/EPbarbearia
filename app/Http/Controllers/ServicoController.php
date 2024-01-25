@@ -17,6 +17,7 @@ class ServicoController extends Controller
             'descricao' => $request->descricao,
             'duracao' => $request->duracao,
             'preco' => $request->preco,
+            'nome_profissional'=>$request->nome_profissional
         ]);
 
         return response()->json([
