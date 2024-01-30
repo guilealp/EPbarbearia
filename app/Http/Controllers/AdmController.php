@@ -11,7 +11,7 @@ class AdmController extends Controller
 {
     public function cadastroAdm(admFormRequest $request)
     {
-        $adm = adm::create([
+        $adm = Adm::create([
             'nome' => $request->nome,
             'celular' => $request->celular,
             'email' => $request->email,
@@ -145,20 +145,27 @@ class AdmController extends Controller
 
     public function esqueciSenhaAdm(Request $request)
     {
-        $adm = adm::where('cpf', $request->cpf)->where('email', $request->email)->first();
+        $adm = adm::where('email', $request->email)->first();
 
-        if (isset($adm)) {
-            $adm->senha = Hash::make($adm->senha);
-            $adm->update();
+
+        if (!isset($adm)) {
             return response()->json([
-                'status' => true,
-                'message' => 'senha redefinida.'
+                'status' => false,
+                'message' => "Email invalido"
+
             ]);
         }
 
+        if (isset($adm->cpf)) {
+           
+            $adm->senha = Hash::make( $adm->cpf );
+            
+        }
+        $adm->update();
+
         return response()->json([
-            'status' => false,
-            'message' => 'não foi possivel alterar a senha'
+            'status' => true,
+            'senha' => $adm->senha
         ]);
     }
 

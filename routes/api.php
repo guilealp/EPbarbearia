@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdmController;
 use App\Http\Controllers\agendaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PagamentoController;
@@ -25,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('servico/store', [ServicoController::class, 'store']);
 Route::get('servico/retornarTodos', [ServicoController::class, 'retornarTodos']);
 Route::post('servico/procurarNome', [ServicoController::class, 'pesquisarPorNome']);
-Route::post('servico/procurarDescricao', [ServicoController::class, 'pesquisarPorDescricao']);
-Route::delete('servuico/delete/{id}', [ServicoController::class, 'excluir']);
+Route::post('servico/procurar/descricao', [ServicoController::class, 'pesquisarPorDescricao']);
+Route::delete('servico/delete/{id}', [ServicoController::class, 'excluir']);
 Route::put('servico/update', [ServicoController::class, 'update']);
 Route::get('servico/pesquisarPor/{id}', [ServicoController::class, 'pesquisarPorId']);
 Route::get('servico/exportar/csv', [ServicoController::class, 'exportarCsv']);
@@ -56,7 +57,9 @@ Route::delete('adm/excluirProfissional/{id}', [ProfissionalController::class, 'e
 Route::put('adm/profissional/atualizar', [ProfissionalController::class, 'update']);
 Route::get('adm/profissional/pesquisarPor/{id}', [ProfissionalController::class, 'pesquisarPorId']);
 Route::get('adm/profissional/Exportar/csv', [ProfissionalController::class, 'exportarCsv']);
-Route::post('adm/profissional/esqueciSenha', [ProfissionalController::class, 'esqueciSenha']);
+Route::post('profissional/esqueciSenha', [ProfissionalController::class, 'esqueciSenha']);
+Route::post('profissional/cadastroAgenda', [agendaController::class, 'store']);
+Route::post('profissional/cliente/cadastro', [ClienteController::class, 'store']);
 
 //agenda
 Route::post('cadastroAgenda', [agendaController::class, 'store']);
@@ -66,15 +69,25 @@ Route::put('atualizarAgenda', [agendaController::class, 'update']);
 Route::get('retornarTodosAgenda', [agendaController::class, 'retornarTodos']);
 
 //ADM
-
+Route::post('adm/cadastro', [AdmController::class, 'cadastroAdm']);
+Route::get('adm/retornarTodos', [AdmController::class, 'retornarTodos']);
+Route::post('adm/procurarNome', [AdmController::class, 'pesquisarPorNome']);
+Route::post('adm/procurarCpf', [AdmController::class, 'pesquisarPorCpf']);
+Route::post('adm/procurarCelular', [AdmController::class, 'pesquisarPorCelular']);
+Route::post('adm/procurarEmail', [AdmController::class, 'pesquisarPorEmail']);
+Route::delete('adm/excluir{id}', [AdmController::class, 'excluir']);
+Route::put('adm/atualizar', [AdmController::class, 'update']);
+Route::get('adm/pesquisarPor/{id}', [AdmController::class, 'pesquisarPorId']);
+Route::get('adm/Exportar/csv', [AdmController::class, 'exportarCsv']);
+Route::post('adm/esqueciSenha', [AdmController::class, 'esqueciSenhaAdm']);
 
 Route::post('adm/servico/cadastro',[ServicoController::class, 'store']);
 Route::put('adm/servico/atualizar',[ServicoController::class, 'update']);
-Route::delete('adm/servico/excluir',[ServicoController::class, 'excluir']);
+Route::delete('adm/servico/excluir/{id}',[ServicoController::class, 'excluir']);
 
 Route::post('adm/agenda/cadastro',[agendaController::class, 'store']);
 Route::put('adm/agenda/atualizar',[agendaController::class, 'atualizar']);
-Route::delete('adm/agenda/excluir',[agendaController::class, 'excluir']);
+Route::delete('adm/agenda/excluir/{id}',[agendaController::class, 'excluir']);
 
 //Pagamento
 Route::post('adm/pagamento/cadastro',[PagamentoController::class, 'store']);

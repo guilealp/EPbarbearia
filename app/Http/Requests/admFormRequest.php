@@ -45,7 +45,7 @@ class admFormRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success' => false,
+            'sucess' => false,
             'error' => $validator->errors()
         ]));
     }

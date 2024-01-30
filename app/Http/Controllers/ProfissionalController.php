@@ -247,20 +247,27 @@ class ProfissionalController extends Controller
 
     public function esqueciSenha(Request $request)
     {
-        $profissionals = profissional::where('cpf', '=', $request->cpf)->where('email', '=', $request->email)->first();
+        $profissional = profissional::where('email', $request->email)->first();
 
-        if (isset($profissionals)) {
-            $profissionals->senha = Hash::make($profissionals->senha);
-            $profissionals->update();
+
+        if (!isset($profissional)) {
             return response()->json([
-                'status' => true,
-                'message' => 'senha redefinida.'
+                'status' => false,
+                'message' => "Email invalido"
+
             ]);
         }
 
+        if (isset($profissional->cpf)) {
+           
+            $profissional->senha = Hash::make( $profissional->cpf );
+            
+        }
+        $profissional->update();
+
         return response()->json([
-            'status' => false,
-            'message' => 'não foi possivel alterar a senha'
+            'status' => true,
+            'senha' => $profissional->senha
         ]);
     }
 }
