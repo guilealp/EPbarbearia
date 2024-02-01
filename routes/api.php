@@ -53,7 +53,7 @@ Route::post('adm/profissional/procurarNome', [ProfissionalController::class, 'pe
 Route::post('adm/profissional/procurarCpf', [ProfissionalController::class, 'pesquisarPorCpf']);
 Route::post('adm/profissional/procurarCelular', [ProfissionalController::class, 'pesquisarPorCelular']);
 Route::post('adm/profissional/procurarEmail', [ProfissionalController::class, 'pesquisarPorEmail']);
-Route::delete('adm/excluirProfissional/{id}', [ProfissionalController::class, 'excluir']);
+Route::delete('adm/excluir/Profissional/{id}', [ProfissionalController::class, 'excluir']);
 Route::put('adm/profissional/atualizar', [ProfissionalController::class, 'update']);
 Route::get('adm/profissional/pesquisarPor/{id}', [ProfissionalController::class, 'pesquisarPorId']);
 Route::get('adm/profissional/Exportar/csv', [ProfissionalController::class, 'exportarCsv']);
@@ -71,14 +71,8 @@ Route::get('retornarTodosAgenda', [agendaController::class, 'retornarTodos']);
 //ADM
 Route::post('adm/cadastro', [AdmController::class, 'cadastroAdm']);
 Route::get('adm/retornarTodos', [AdmController::class, 'retornarTodos']);
-Route::post('adm/procurarNome', [AdmController::class, 'pesquisarPorNome']);
-Route::post('adm/procurarCpf', [AdmController::class, 'pesquisarPorCpf']);
-Route::post('adm/procurarCelular', [AdmController::class, 'pesquisarPorCelular']);
-Route::post('adm/procurarEmail', [AdmController::class, 'pesquisarPorEmail']);
-Route::delete('adm/excluir{id}', [AdmController::class, 'excluir']);
+Route::delete('adm/excluir/{id}', [AdmController::class, 'excluir']);
 Route::put('adm/atualizar', [AdmController::class, 'update']);
-Route::get('adm/pesquisarPor/{id}', [AdmController::class, 'pesquisarPorId']);
-Route::get('adm/Exportar/csv', [AdmController::class, 'exportarCsv']);
 Route::post('adm/esqueciSenha', [AdmController::class, 'esqueciSenhaAdm']);
 
 Route::post('adm/servico/cadastro',[ServicoController::class, 'store']);

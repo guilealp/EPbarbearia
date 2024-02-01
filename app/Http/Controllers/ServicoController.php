@@ -55,8 +55,7 @@ class ServicoController extends Controller
 
     public function pesquisarPorNome(Request $request)
     {
-        $servicos = Servico::where('nome', 'like', '%' . $request->nome . '%')->get();
-
+        $servicos = servico::where('nome', 'like', '%' . $request->nome . '%')->get();
         if (count($servicos) > 0) {
             return response()->json([
                 'status' => true,
@@ -64,9 +63,10 @@ class ServicoController extends Controller
             ]);
         }
 
+
         return response()->json([
             'status' => false,
-            'data' => 'Não há resultados para a pesquisa.'
+            'message' => "Não há resultados para pesquisar"
         ]);
     }
 
