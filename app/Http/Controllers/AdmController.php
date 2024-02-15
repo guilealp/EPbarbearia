@@ -5,35 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Requests\admFormRequest;
 use App\Models\Adm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdmController extends Controller
 {
     public function cadastroAdm(admFormRequest $request)
     {
-        $adm = Adm::create([
-            'nome' => $request->nome,
-            'celular' => $request->celular,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'dataNascimento' => $request->dataNascimento,
-            'cidade' => $request->cidade,
-            'estado' => $request->estado,
-            'pais' => $request->pais,
-            'rua' => $request->rua,
-            'numero' => $request->numero,
-            'bairro' => $request->bairro,
-            'cep' => $request->cep,
-            'complemento' => $request->complemento,
-            'senha' => Hash::make($request->senha),
+        try{
+            $data = $request->all();
 
-        ]);
+            $data['password'] = Hash::make($request->password);
 
-        return response()->json([
-            "success" => true,
-            "message" => "adm Cadastrado com sucesso",
-            "data" => $adm
-        ], 200);
+            $response = Adm::create($data)->createToken($request->server('HTTP_USER_AGENT'))->plainTextToken;
+
+            return response()->json([
+                'status'=>'success',
+                'message'=>"Admin cadastrato com sucesso",
+                'token'=>$response
+            ],200);
+        } catch(\Throwable $th){
+            return response()->json([
+                'status'=> false,
+                'menssage'=> $th->getMessage()
+            ],500);
+        }
     }
 
     public function retornarTodos()
@@ -72,8 +68,8 @@ class AdmController extends Controller
             ]);
         }
 
-        if (isset($request->nome)) {
-            $adm->nome = $request->nome;
+        if (isset($request->name)) {
+            $adm->name = $request->name;
         }
         if (isset($request->celular)) {
             $adm->celular = $request->celular;
@@ -111,8 +107,8 @@ class AdmController extends Controller
         if (isset($request->complemento)) {
             $adm->complemento = $request->complemento;
         }
-        if (isset($request->senha)) {
-            $adm->senha = $request->senha;
+        if (isset($request->password)) {
+            $adm->password = $request->password;
         }
 
         $adm->update();
@@ -143,7 +139,7 @@ class AdmController extends Controller
         ]);
     }
 
-    public function esqueciSenhaAdm(Request $request)
+    public function esquecipasswordAdm(Request $request)
     {
         $adm = adm::where('email', $request->email)->first();
 
@@ -158,15 +154,46 @@ class AdmController extends Controller
 
         if (isset($adm->cpf)) {
            
-            $adm->senha = Hash::make( $adm->cpf );
+            $adm->password = Hash::make( $adm->cpf );
             
         }
         $adm->update();
 
         return response()->json([
             'status' => true,
-            'senha' => $adm->senha
+            'password' => $adm->password
         ]);
+    }
+    public function login(Request $request){
+        try{
+            if(Auth::guard('adms')->attempt([
+                'email'=> $request->email,
+                'password'=>$request->password
+            ])) {
+                $user = Auth::guard('adms')->user();
+
+                $token = $user->createToken($request->server('HTTP_USER_AGENT',
+                ['adms']))->plainTextToken;
+
+                return response()->json([
+                    'status'=>'success',
+                    'message'=>'Admin logado com sucesso',
+                    'token'=>$token
+                ]);
+            }
+            else{
+                return response()->json([
+                    'status'=> false,
+                    'message'=>'credenciais incorretas'
+                ]);
+            }
+        }
+        catch(\Throwable $th){
+            return response()->json([
+                'status'=> false,
+                'menssage'=> $th->getMessage()
+            ],500);
+        }
     }
 
    

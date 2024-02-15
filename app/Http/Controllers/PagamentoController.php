@@ -12,7 +12,7 @@ class PagamentoController extends Controller
     public function store(pagamentoFormRequest $request)
     {
         $pagamento = Pagamento::create([
-            'nome_pagamento' => $request->nome_pagamento,
+            'name_pagamento' => $request->name_pagamento,
 
         ]);
 
@@ -40,22 +40,22 @@ class PagamentoController extends Controller
             'message' => "pagamento excluido com sucesso"
         ]);
     }
-    public function esqueciSenha(Request $request)
+    public function esquecipassword(Request $request)
     {
         $pagamento = Pagamento::where('cpf', '=', $request->cpf)->where('email', '=', $request->email)->first();
 
         if (isset($pagamento)) {
-            $pagamento->senha = Hash::make($pagamento->senha);
+            $pagamento->password = Hash::make($pagamento->password);
             $pagamento->update();
             return response()->json([
                 'status' => true,
-                'message' => 'senha redefinida.'
+                'message' => 'password redefinida.'
             ]);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'não foi possivel alterar a senha'
+            'message' => 'não foi possivel alterar a password'
         ]);
     }
 }

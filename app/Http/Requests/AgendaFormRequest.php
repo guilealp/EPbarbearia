@@ -49,8 +49,8 @@ class AgendaFormRequest extends FormRequest
             'profissional_id.required' => 'O campo profissional é obrigatorio',
             'data_hora.required' => 'cliente obrigatoria',
             'data_hora.date' => 'Formato invalido',
-            'tipo_pagamento.max' => 'o campo nome deve conter no maximo 20 caracteres',
-            'tipo_pagamento.min' => 'o campo nome dever conter no minimo 3 caracteres',
+            'tipo_pagamento.max' => 'o campo name deve conter no maximo 20 caracteres',
+            'tipo_pagamento.min' => 'o campo name dever conter no minimo 3 caracteres',
             'valor.decimal:2' => 'formato invalido'
 
         ];

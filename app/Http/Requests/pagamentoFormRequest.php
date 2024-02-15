@@ -24,7 +24,7 @@ class PagamentoFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome_pagamento' => 'required|max:80|min:5',
+            'name_pagamento' => 'required|max:80|min:5',
         ];
     }
 
@@ -39,9 +39,9 @@ class PagamentoFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome_pagamento.required' => 'O campo nome é obrigatorio',
-            'nome_pagamento.max' => 'o campo nome deve conter no maximo 80 caracteres',
-            'nome_pagamento.min' => 'o campo nome dever conter no minimo 5 caracteres',
+            'name_pagamento.required' => 'O campo name é obrigatorio',
+            'name_pagamento.max' => 'o campo name deve conter no maximo 80 caracteres',
+            'name_pagamento.min' => 'o campo name dever conter no minimo 5 caracteres',
            
            
 

@@ -10,6 +10,6 @@ class Pagamento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome_pagamento'
+        'name_pagamento'
     ];
 }

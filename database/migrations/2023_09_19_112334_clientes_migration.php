@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 120)->nullable(false);
+            $table->string('name', 120)->nullable(false);
             $table->string('celular', 11)->nullable(false);
             $table->string('email', 120)->unique()->nullable(false);
             $table->string('cpf', 11)->unique()->nullable(false);
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('bairro', 100)->nullable(false);
             $table->string('cep', 8)->nullable(false);
             $table->string('complemento', 150)->nullable(true);
-            $table->string('senha')->nullable(false);
+            $table->string('password')->nullable(false);
             $table->timestamps();
         });
     }

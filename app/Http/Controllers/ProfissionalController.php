@@ -13,7 +13,7 @@ class ProfissionalController extends Controller
     public function store(ProfissionalFormRequest $request)
     {
         $profissional = profissional::create([
-            'nome' => $request->nome,
+            'name' => $request->name,
             'celular' => $request->celular,
             'email' => $request->email,
             'cpf' => $request->cpf,
@@ -26,7 +26,7 @@ class ProfissionalController extends Controller
             'bairro' => $request->bairro,
             'cep' => $request->cep,
             'complemento' => $request->complemento,
-            'senha' => Hash::make($request->senha),
+            'password' => Hash::make($request->password),
             'salario' => $request->salario,
 
         ]);
@@ -63,9 +63,9 @@ class ProfissionalController extends Controller
             'data' => $profissional
         ]);
     }
-    public function pesquisarPorNome(Request $request)
+    public function pesquisarPorname(Request $request)
     {
-        $profissional = profissional::where('nome', 'like', '%' . $request->nome . '%')->get();
+        $profissional = profissional::where('name', 'like', '%' . $request->name . '%')->get();
 
         if (count($profissional) > 0) {
             return response()->json([
@@ -144,8 +144,8 @@ class ProfissionalController extends Controller
             ]);
         }
 
-        if (isset($request->nome)) {
-            $profissional->nome = $request->nome;
+        if (isset($request->name)) {
+            $profissional->name = $request->name;
         }
         if (isset($request->celular)) {
             $profissional->celular = $request->celular;
@@ -183,8 +183,8 @@ class ProfissionalController extends Controller
         if (isset($request->complemento)) {
             $profissional->complemento = $request->complemento;
         }
-        if (isset($request->senha)) {
-            $profissional->senha = $request->senha;
+        if (isset($request->password)) {
+            $profissional->password = $request->password;
         }
         if (isset($request->salario)) {
             $profissional->salario = $request->salario;
@@ -221,17 +221,17 @@ class ProfissionalController extends Controller
     {
         $profissionals = profissional::all();
 
-        $nomeArquivo = 'profissionals.csv';
+        $nameArquivo = 'profissionals.csv';
 
-        $filePath = storage_path('app/public/' . $nomeArquivo);
+        $filePath = storage_path('app/public/' . $nameArquivo);
 
         $handle = fopen($filePath, "w");
 
-        fputcsv($handle, array('nome', 'E-mail', 'cpf', 'celular',), ';');
+        fputcsv($handle, array('name', 'E-mail', 'cpf', 'celular',), ';');
 
         foreach ($profissionals as $u) {
             fputcsv($handle, array(
-                $u->nome,
+                $u->name,
                 $u->email,
                 $u->cpf,
                 $u->celular,
@@ -241,11 +241,11 @@ class ProfissionalController extends Controller
 
         fclose($handle);
 
-        return Response::download(public_path() . '/storage/' . $nomeArquivo)
+        return Response::download(public_path() . '/storage/' . $nameArquivo)
             ->deleteFileAfterSend(true);
     }
 
-    public function esqueciSenha(Request $request)
+    public function esquecipassword(Request $request)
     {
         $profissional = profissional::where('email', $request->email)->first();
 
@@ -260,14 +260,14 @@ class ProfissionalController extends Controller
 
         if (isset($profissional->cpf)) {
            
-            $profissional->senha = Hash::make( $profissional->cpf );
+            $profissional->password = Hash::make( $profissional->cpf );
             
         }
         $profissional->update();
 
         return response()->json([
             'status' => true,
-            'senha' => $profissional->senha
+            'password' => $profissional->password
         ]);
     }
 }

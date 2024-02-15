@@ -13,7 +13,7 @@ class ClienteController extends Controller
     public function store(ClientesFormRequest $request)
     {
         $clientes = clientes::create([
-            'nome' => $request->nome,
+            'name' => $request->name,
             'celular' => $request->celular,
             'email' => $request->email,
             'cpf' => $request->cpf,
@@ -26,7 +26,7 @@ class ClienteController extends Controller
             'bairro' => $request->bairro,
             'cep' => $request->cep,
             'complemento' => $request->complemento,
-            'senha' => Hash::make($request->senha),
+            'password' => Hash::make($request->password),
 
         ]);
 
@@ -63,9 +63,9 @@ class ClienteController extends Controller
         ]);
     }
 
-    public function pesquisarPorNome(Request $request)
+    public function pesquisarPorname(Request $request)
     {
-        $clientes = clientes::where('nome', 'like', '%' . $request->nome . '%')->get();
+        $clientes = clientes::where('name', 'like', '%' . $request->name . '%')->get();
 
         if (count($clientes) > 0) {
             return response()->json([
@@ -145,8 +145,8 @@ class ClienteController extends Controller
             ]);
         }
 
-        if (isset($request->nome)) {
-            $cliente->nome = $request->nome;
+        if (isset($request->name)) {
+            $cliente->name = $request->name;
         }
         if (isset($request->celular)) {
             $cliente->celular = $request->celular;
@@ -184,8 +184,8 @@ class ClienteController extends Controller
         if (isset($request->complemento)) {
             $cliente->complemento = $request->complemento;
         }
-        if (isset($request->senha)) {
-            $cliente->senha = $request->senha;
+        if (isset($request->password)) {
+            $cliente->password = $request->password;
         }
 
         $cliente->update();
@@ -216,7 +216,7 @@ class ClienteController extends Controller
         ]);
     }
 
-    public function esqueciSenha(Request $request)
+    public function esquecipassword(Request $request)
     {
         $cliente = clientes::where('cpf', '=', $request->cpf)->first();
 
@@ -228,7 +228,7 @@ class ClienteController extends Controller
             ]);
         }
 
-        $cliente->senha = Hash::make($cliente->cpf);
+        $cliente->password = Hash::make($cliente->cpf);
 
         $cliente->update();
 
@@ -242,17 +242,17 @@ class ClienteController extends Controller
     {
         $clientes = clientes::all();
 
-        $nomeArquivo = 'clientes.csv';
+        $nameArquivo = 'clientes.csv';
 
-        $filePath = storage_path('app/public/' . $nomeArquivo);
+        $filePath = storage_path('app/public/' . $nameArquivo);
 
         $handle = fopen($filePath, "w");
 
-        fputcsv($handle, array('nome', 'E-mail', 'cpf', 'celular',), ';');
+        fputcsv($handle, array('name', 'E-mail', 'cpf', 'celular',), ';');
 
         foreach ($clientes as $u) {
             fputcsv($handle, array(
-                $u->nome,
+                $u->name,
                 $u->email,
                 $u->cpf,
                 $u->celular,
@@ -262,26 +262,26 @@ class ClienteController extends Controller
 
         fclose($handle);
 
-        return Response::download(public_path() . '/storage/' . $nomeArquivo)
+        return Response::download(public_path() . '/storage/' . $nameArquivo)
             ->deleteFileAfterSend(true);
     }
 
-    public function esqueciSenhaCliente(Request $request)
+    public function esquecipasswordCliente(Request $request)
     {
         $cliente = clientes::where('cpf', $request->cpf)->where('email', $request->email)->first();
 
         if (isset($cliente)) {
-            $cliente->senha = Hash::make($cliente->senha);
+            $cliente->password = Hash::make($cliente->password);
             $cliente->update();
             return response()->json([
                 'status' => true,
-                'message' => 'senha redefinida.'
+                'message' => 'password redefinida.'
             ]);
         }
 
         return response()->json([
             'status' => false,
-            'message' => 'não foi possivel alterar a senha'
+            'message' => 'não foi possivel alterar a password'
         ]);
     }
 }

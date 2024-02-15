@@ -24,7 +24,7 @@ class ServicoFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|max:80|min:5|unique:servicos,nome',
+            'name' => 'required|max:80|min:5|unique:servicos,name',
             'descricao' => 'required|max:200|min:10',
             'duracao' => 'required|numeric',
             'preco' => 'required|decimal:2',
@@ -42,10 +42,10 @@ class ServicoFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'O campo nome é obrigatorio',
-            'nome.max' => 'o campo nome deve conter no maximo 80 caracteres',
-            'nome.min' => 'o campo nome dever conter no minimo 5 caracteres',
-            'nome.unique' => 'nome ja cadastrado no sistema',
+            'name.required' => 'O campo name é obrigatorio',
+            'name.max' => 'o campo name deve conter no maximo 80 caracteres',
+            'name.min' => 'o campo name dever conter no minimo 5 caracteres',
+            'name.unique' => 'name ja cadastrado no sistema',
             'descricao.required' => 'Descrição obrigatoria',
             'descricao.max' => 'Descrição deve conter no maximo 200 caracteres',
             'descricao.min' => 'Descrição deve conter no minimo 10 caracteres',

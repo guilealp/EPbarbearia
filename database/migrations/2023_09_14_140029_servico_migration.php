@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 80)->unique()->nullable(false);
+            $table->string('name', 80)->unique()->nullable(false);
             $table->string('descricao', 200)->nullable(false);
             $table->integer('duracao')->nullable(false);
             $table->decimal('preco')->decimal()->nullable(false);
-            $table->bigInteger('nome_profissional')->nullable(false);
+            $table->bigInteger('name_profissional')->nullable(false);
             $table->timestamps();
         });
     }

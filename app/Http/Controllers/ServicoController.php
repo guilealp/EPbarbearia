@@ -13,11 +13,11 @@ class ServicoController extends Controller
     public function store(Request $request)
     {
         $servicos = servico::create([
-            'nome' => $request->nome,
+            'name' => $request->name,
             'descricao' => $request->descricao,
             'duracao' => $request->duracao,
             'preco' => $request->preco,
-            'nome_profissional'=>$request->nome_profissional
+            'name_profissional'=>$request->name_profissional
         ]);
 
         return response()->json([
@@ -53,9 +53,9 @@ class ServicoController extends Controller
         ]);
     }
 
-    public function pesquisarPorNome(Request $request)
+    public function pesquisarPorname(Request $request)
     {
-        $servicos = servico::where('nome', 'like', '%' . $request->nome . '%')->get();
+        $servicos = servico::where('name', 'like', '%' . $request->name . '%')->get();
         if (count($servicos) > 0) {
             return response()->json([
                 'status' => true,
@@ -99,8 +99,8 @@ class ServicoController extends Controller
             ]);
         }
 
-        if (isset($request->nome)) {
-            $servicos->nome = $request->nome;
+        if (isset($request->name)) {
+            $servicos->name = $request->name;
         }
         if (isset($request->descricao)) {
             $servicos->descricao = $request->descricao;
@@ -143,17 +143,17 @@ class ServicoController extends Controller
     {
         $servicos = servico::all();
 
-        $nomeArquivo = 'servicos.csv';
+        $nameArquivo = 'servicos.csv';
 
-        $filePath = storage_path('app/public/' . $nomeArquivo);
+        $filePath = storage_path('app/public/' . $nameArquivo);
 
         $handle = fopen($filePath, "w");
 
-        fputcsv($handle, array('nome', 'E-mail', 'cpf', 'celular',), ';');
+        fputcsv($handle, array('name', 'E-mail', 'cpf', 'celular',), ';');
 
         foreach ($servicos as $u) {
             fputcsv($handle, array(
-                $u->nome,
+                $u->name,
                 $u->email,
                 $u->cpf,
                 $u->celular,
@@ -163,7 +163,7 @@ class ServicoController extends Controller
 
         fclose($handle);
 
-        return Response::download(public_path() . '/storage/' . $nomeArquivo)
+        return Response::download(public_path() . '/storage/' . $nameArquivo)
             ->deleteFileAfterSend(true);
     }
 }

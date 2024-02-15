@@ -25,7 +25,7 @@ class ProfissionalFormRequest extends FormRequest
     {
         return [
 
-            'nome' => 'required|max:120',
+            'name' => 'required|max:120',
             'celular' => 'required|max:11|min:10',
             'email' => 'required|max:120|email|unique:profissionals,email',
             'cpf' => 'required|max:11|min:11|unique:profissionals,cpf',
@@ -38,7 +38,7 @@ class ProfissionalFormRequest extends FormRequest
             'bairro' => 'required|max:100',
             'cep' => 'required|max:8|min:8',
             'complemento' => 'max:150',
-            'senha' => 'required',
+            'password' => 'required',
             'salario' => 'required|decimal:2',
 
 
@@ -56,8 +56,8 @@ class ProfissionalFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'O campo nome é obrigatorio',
-            'nome.max' => 'o campo nome deve conter no maximo 120 caracteres',
+            'name.required' => 'O campo name é obrigatorio',
+            'name.max' => 'o campo name deve conter no maximo 120 caracteres',
             'celular.required' => 'Celular obrigatoria',
             'celular.max' => 'Celular deve conter no maximo 11 caracteres',
             'celular.min' => 'Celular deve conter no minimo 10 caracteres',
@@ -88,7 +88,7 @@ class ProfissionalFormRequest extends FormRequest
             'cep.max' => 'Cep deve conter no maximo 8 caracteres',
             'cep.min' => 'Cep deve conter no minimo 8 caracteres',
             'Complemento.max' => 'Complemento deve conter no maximo 150 caracteres',
-            'senha.required' => 'Senha obrigatorio',
+            'password.required' => 'password obrigatorio',
             'salario.required' => 'salario obrigatorio',
             'salario.decimal' => 'formato invalido',
 

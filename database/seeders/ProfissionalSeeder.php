@@ -16,7 +16,7 @@ class ProfissionalSeeder extends Seeder
     {
         for ($i = 0; $i < 100; $i++) {
             profissional::create([
-                'nome' => 'teste ' . $i,
+                'name' => 'teste ' . $i,
                 'celular' => '123456789',
                 'email' => 'teste' . $i . '@hotmail.com',
                 'cpf' => rand(00000000001, 99999999999),
@@ -29,7 +29,7 @@ class ProfissionalSeeder extends Seeder
                 'bairro'  => 'bairro' . $i,
                 'cep' => '12345678',
                 'complemento' => 'complemento' . $i,
-                'senha' => Hash::make('123456'),
+                'password' => Hash::make('123456'),
                 'salario' => '200.00'
 
             ]);
